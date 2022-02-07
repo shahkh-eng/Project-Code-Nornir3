@@ -125,35 +125,35 @@ Requirements to run this code
  Download the above libraries with pip3
 '''
 
-# Import Statements
+### Import Statements
 from nornir import InitNornir
 from nornir_napalm.plugins.tasks import napalm_get
 from nornir_utils.plugins.functions import print_result
 from openpyxl import Workbook
 
-# Initialize Nornir with a configuration file
+### Initialize Nornir with a configuration file
 nr = InitNornir("config.yml")
 
-# Create a new Workbook s wb
+### Create a new Workbook s wb
 wb = Workbook()
 
-# Take Active Worksheet as ws
+### Take Active Worksheet as ws
 device_ws = wb.active
 
-# Change the title of active workseet to Device Facts
+### Change the title of active workseet to Device Facts
 device_ws.title = "Devices Details"
 
-# Statically assign headers to Device Facts ws
+### Statically assign headers to Device Facts ws
 device_headers = ["Device Name", "Vendor",
                   "Model", "OS", "Serial", "Up Time", ]
 
-# Write headers on the top line of the file
+### Write headers on the top line of the file
 device_ws.append(device_headers)
 
-# Nornir to run napalm getters e.g. facts
+### Nornir to run napalm getters e.g. facts
 getter_output = nr.run(task=napalm_get, getters=["facts"])
 
-# For loop to get interusting values from the output
+### For loop to get interusting values from the output
 for host, task_results in getter_output.items():
     try:
         # Get the device facts result
@@ -182,7 +182,7 @@ for host, task_results in getter_output.items():
         device_ws.append(line)
         continue
 
-# Save workbook
+### Save workbook
 
 wb.save(filename="device information.xlsx")
 
